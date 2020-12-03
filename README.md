@@ -31,19 +31,19 @@ This could be better! Introducing InertiaRoute, the simplest way to use your com
 InertiaRoute::bind('your/custom/route/', 'components/folder/');
 ```
 
-If you visit http://localhost:8000/your/custom/route/about it will render /resources/js/Pages/path/to/component/about.vue (or react or svelte). Now, all components that you create inside /resources/js/Pages/path/to/component/ will be automatically bind to a http://localhost:8000/your/custom/route/{component_name} route. 🤯
+If you visit http://localhost:8000/your/custom/route/about it will render /resources/js/Pages/path/to/component/about.vue (or react or svelte). Now, all components that you create inside /resources/js/Pages/path/to/component/ will be automatically bind to a route like http://localhost:8000/your/custom/route/{component_name} 🤯.
 
-Want to serve from your root domain?
+Want to serve components from your root domain?
 
 ```php
 InertiaRoute::bind('/', 'components/folder/');
 ```
 
-**IMPORTANT!** InertiaRoute::bind use a "catch all strategy", so put this route at the end of all other related routes.
+**IMPORTANT!** InertiaRoute::bind use a "catch all" strategy, so put this route at the end of your route file or group.
 
 ## What about parameters
 
-If you want to use paramaters in your route, without any backend processing, you could use an specific route like this:
+If you want to use paramaters in your route( without any backend processing) you could use a route like this:
 
 ```php
 InertiaRoute::get('/your/custom/route/{parameter}', 'path/to/your/component');
