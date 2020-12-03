@@ -41,6 +41,12 @@ InertiaRoute::bind('/', 'components/folder/');
 
 **IMPORTANT!** InertiaRoute::bind use a "catch all" strategy, so put this route at the end of your route file or group.
 
+## Installation
+
+```
+composer require jecovier/inertia-route
+```
+
 ## What about parameters
 
 If you want to use paramaters in your route( without any backend processing) you could use a route like this:
