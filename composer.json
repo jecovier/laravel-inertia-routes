@@ -1,0 +1,35 @@
+{
+    "name": "jecovier/inertia-route",
+    "description": "use inertia components as pages",
+    "type": "library",
+    "require": {
+        "inertiajs/inertia-laravel": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Javier Espinoza",
+            "email": "jecovier@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Jecovier\\InertiaRoute\\": "packages/jecovier/inertia-route/src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jecovier\\InertiaRoute\\InertiaRouteServiceProvider"
+            ],
+            "aliases": {
+                "InertiaRoute": "Jecovier\\InertiaRoute\\InertiaRoute"
+            }
+        }
+    }
+}
