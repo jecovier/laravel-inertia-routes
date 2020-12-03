@@ -47,6 +47,14 @@ InertiaRoute::bind('/', 'components/folder/');
 composer require jecovier/inertia-route
 ```
 
+Current requirements are
+
+- PHP 7.3 | 8
+- Laravel 8
+- Inertia-Laravel 0.3.3
+
+It's posible that this package works with older versions of PHP, Laravel or Inertia, cause all it does is wrap a Route object. But I don't have time to test it, if you try, please let me know 🙌.
+
 ## What about parameters
 
 If you want to use route paramaters(without any backend proccess) you could define a route like this:
