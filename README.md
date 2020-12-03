@@ -49,13 +49,13 @@ composer require jecovier/inertia-route
 
 ## What about parameters
 
-If you want to use paramaters in your route( without any backend processing) you could use a route like this:
+If you want to use route paramaters(without any backend proccess) you could define a route like this:
 
 ```php
 InertiaRoute::get('/your/custom/route/{parameter}', 'path/to/your/component');
 ```
 
-And your component will recevie that variable as a prop:
+And in your component you will receive that variable as a prop:
 
 vue:
 
@@ -83,7 +83,7 @@ Someone could help me with a react example? 🙊
 
 ## Middlewares... Prefixes... Can
 
-InertiaRoute returns a Route object, so you can chained other route methods:
+InertiaRoute returns a Route object instance, so you can chained other methods:
 
 ```php
 InertiaRoute::get('/your/custom/route/{parameter}', 'path/to/your/component')
@@ -91,7 +91,7 @@ InertiaRoute::get('/your/custom/route/{parameter}', 'path/to/your/component')
     ->can('viewThis');
 ```
 
-## I am really lazy
+## I'm really lazy
 
 ```php
 InertiaRoute::get('path/to/component/{parameter}');
