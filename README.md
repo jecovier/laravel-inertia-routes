@@ -126,11 +126,11 @@ nice, right? 😎
 
 ## what if there is no component?
 
-InertiaRoute verifies if the file exist before try to render it. So in case you want to access a non existing component, it will display a 404 page.
+InertiaRoute verifies if the file exist before try to render it. In case you want to access a non existing component, it will display a 404 page.
 
 ## I prefer Svelte or React
 
-Yeah, me too (svelte simp here 🙊). By default, InertiaRoute will be render Vue files, so in most cases you don't need to do anything. But, if you are working with React or Svelte, you could easily switch to those frameworks.
+Yeah, me too (svelte simp here 🙊). By default InertiaRoute will render Vue files, so in most cases you don't need to do anything. But, if you are working with React or Svelte, you could easily switch to those frameworks.
 
 In case of **React**:
 
@@ -182,7 +182,7 @@ Consider that InertiaRoute automatically use the laravel folder as root, so the 
 
 ## Contribution
 
-Yes, please. This is a little library make in my spare time, so any PR is welcome 🙌.
+Yes, please. This is a little library make in my spare time, any PR is welcome 🙌.
 
 ## License
 
