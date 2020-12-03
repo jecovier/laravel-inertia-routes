@@ -16,8 +16,13 @@ class InertiaRoute
             return  call_user_func_array('self::route', $args);
         }
 
-        if (in_array($name, ['vue', 'react', 'svelte'])) {
+        if (in_array($name, ['vue', 'svelte'])) {
             self::$ext = $name;
+            return  new self;
+        }
+
+        if ($name === 'react') {
+            self::$ext = 'js';
             return  new self;
         }
     }
@@ -28,43 +33,40 @@ class InertiaRoute
         return new self;
     }
 
-    public static function dynamic(string $folder)
+    public static function bind(string $route, string $folder = null)
     {
-        return Route::any('/{component?}', function ($component, Request $request) use ($folder) {
+        list($safe_route, $safe_folder) = self::parseBinding($route, $folder);
+        return Route::any($safe_route . '/{component?}', function ($component, Request $request) use ($safe_folder) {
             /**
              * If component doesn't exist, redirect to 404
              */
-            if (!file_exists(self::$root . "/$folder/$component." . self::$ext))
+            if (!file_exists(self::$root . "/$safe_folder/$component." . self::$ext))
                 abort(404);
 
             /**
              * Load page with request information
              */
-            return Inertia::render("$folder/$component", ['request' => $request->all()]);
+            return Inertia::render("$safe_folder/$component", ['request' => $request->all()]);
         })->where('component', '.*');
     }
 
-    public static function bind($route)
+    private static function route(string $method, string $route, string $component = null)
     {
-        return self::route('get', $route, ltrim($route, '/'));
-    }
-
-    private static function route(string $method, string $route, string $component)
-    {
-        return Route::$method($route, function (Request $request, ...$args) use ($route, $component) {
+        list($safe_route, $safe_component) = self::parseBinding($route, $component);
+        return Route::$method($safe_route, function (Request $request, ...$args) use ($safe_route, $safe_component) {
             /**
              * If component doesn't exist, redirect to 404
              */
-            if (!file_exists(self::$root . '/' . $component . '.' . self::$ext))
+            if (!file_exists(self::$root . '/' . $safe_component . '.' . self::$ext))
                 abort(404);
 
-            $parameters = self::getParameters($route, $args);
+            $parameters = self::getParameters($safe_route, $args);
             $parameters['request'] = $request->all();
 
             /**
              * Load page with request information
              */
-            return Inertia::render($component, $parameters);
+            return Inertia::render($safe_component, $parameters);
         });
     }
 
@@ -79,5 +81,14 @@ class InertiaRoute
                 $parameters[$variables[1][$i]] = $args[$i];
             }
         return $parameters;
+    }
+
+    private static function parseBinding(string $route, string $folder)
+    {
+        $route = ltrim(rtrim($route, '/'), '/');
+        if (!$folder) $folder = $route;
+        else $folder = ltrim(rtrim($folder, '/'), '/');
+
+        return compact('route', 'folder');
     }
 }
