@@ -1,12 +1,14 @@
 <?php
 
+namespace Jecovier\InertiaRoute;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 class InertiaRoute
 {
-    private static $root = __DIR__ . '/../resources/js/Pages';
+    private static $root = __DIR__ . '/../../../../resources/js/Pages';
     private static $ext = 'vue';
 
     public static function __callStatic($name, $args)
@@ -29,7 +31,7 @@ class InertiaRoute
 
     public static function root($path)
     {
-        self::$root = __DIR__ . '/../' . $path;
+        self::$root = __DIR__ . '/../../../../' . $path;
         return new self;
     }
 
@@ -83,12 +85,12 @@ class InertiaRoute
         return $parameters;
     }
 
-    private static function parseBinding(string $route, string $folder)
+    private static function parseBinding(string $route, string $folder = null)
     {
         $route = ltrim(rtrim($route, '/'), '/');
         if (!$folder) $folder = $route;
         else $folder = ltrim(rtrim($folder, '/'), '/');
 
-        return compact('route', 'folder');
+        return [$route, $folder];
     }
 }
