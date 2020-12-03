@@ -172,7 +172,7 @@ InertiaRoute::delete('/your/custom/route/{parameter}');
 
 ## I don't use /resources/js/Pages
 
-Inertiajs suggests this folder in its installation guide, however, you may be use another folder. So If that is the case, you can change your root folder with:
+Inertiajs suggests this folder in its installation guide, however, you may be use another folder. If that is the case, you can change your root folder with:
 
 ```php
 InertiaRoute::root('your/new/path');
