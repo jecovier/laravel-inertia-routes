@@ -1,14 +1,8 @@
 # Laravel Inertia Routes
 
-When using Inertiajs in your Laravel project, you can render any component(svelte, vue or react) file using the Inertia::render method. But, what happens if don't need any backend data proccessing, just to render a component. You maybe ended up with something like this:
+Render any inertia file inside a folder as html page auotmatically.
 
-```php
-Route::get('/your/custom/route', function(){
-    Inertia::render('path/to/your/component');
-});
-```
-
-and if you need multiple components? 💩
+Instead of doing this:
 
 ```php
 Route::get('your/custom/route/home', function(){
@@ -25,13 +19,13 @@ Route::get('your/custom/route/landing', function(){
 });
 ```
 
-This could be better! Introducing InertiaRoute, the simplest way to use your components as html pages:
+you can do this:
 
 ```php
 InertiaRoute::bind('your/custom/route/', 'components/folder/');
 ```
 
-If you visit http://localhost:8000/your/custom/route/about it will render /resources/js/Pages/path/to/component/about.vue (or react or svelte). Now, all components that you create inside /resources/js/Pages/path/to/component/ will be automatically bind to a route like http://localhost:8000/your/custom/route/{component_name} 🤯.
+Now if you visit http://localhost:8000/your/custom/route/about it will render /resources/js/Pages/path/to/component/about.vue (or react or svelte). All components that you create inside /resources/js/Pages/path/to/component/ will be automatically bind to a route like http://localhost:8000/your/custom/route/{component_name} 🤯.
 
 Want to serve components from your root domain?
 
