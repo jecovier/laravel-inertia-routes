@@ -1,5 +1,5 @@
 {
-    "name": "jecovier/laravel-inertia-route",
+    "name": "jecovier/laravel-inertia-routes",
     "description": "Automatically create routes for any inertia component.",
     "type": "library",
     "require": {

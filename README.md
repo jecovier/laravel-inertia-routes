@@ -30,7 +30,7 @@ InertiaRoute::svelte();
 ## Installation
 
 ```
-composer require jecovier/laravel-inertia-route
+composer require jecovier/laravel-inertia-routes
 ```
 
 ## Usage
