@@ -1,63 +1,109 @@
 # Laravel Inertia Routes
 
-Render any inertia file inside a folder as html page auotmatically.
-
-Instead of doing this:
-
 ```php
-Route::get('your/custom/route/home', function(){
-    Inertia::render('path/to/component/home');
-});
-Route::get('your/custom/route/about', function(){
-    Inertia::render('path/to/component/about');
-});
-Route::get('your/custom/route/contact', function(){
-    Inertia::render('path/to/component/contact');
-});
-Route::get('your/custom/route/landing', function(){
-    Inertia::render('path/to/component/landing');
-});
+/**
+ * /resources/js/Pages/folder/component.vue
+ * http://your-domain.com/folder/component
+ */
+InertiaRoute::get('folder/component');
+
+/**
+ * Change route:
+ * /resources/js/Pages/folder/component.vue
+ * http://your-domain.com/about
+ */
+InertiaRoute::get('about', 'folder/component');
+
+/**
+ * Automatically:
+ * /resources/js/Pages/folder/component.vue
+ * http://your-domain.com/folder/component
+ */
+InertiaRoute::bind('folder');
+
+// change framework
+InertiaRoute::vue();
+InertiaRoute::react();
+InertiaRoute::svelte();
 ```
-
-you can do this:
-
-```php
-InertiaRoute::bind('your/custom/route/', 'components/folder/');
-```
-
-Now if you visit http://localhost:8000/your/custom/route/about it will render /resources/js/Pages/path/to/component/about.vue (or react or svelte). All components that you create inside /resources/js/Pages/path/to/component/ will be automatically bind to a route like http://localhost:8000/your/custom/route/{component_name} 🤯.
-
-Want to serve components from your root domain?
-
-```php
-InertiaRoute::bind('/', 'components/folder/');
-```
-
-**IMPORTANT!** InertiaRoute::bind use a "catch all" strategy, so put this route at the end of your route file or group.
 
 ## Installation
 
 ```
-composer require jecovier/inertia-route
+composer require jecovier/laravel-inertia-route
 ```
 
-Requirements:
+## Usage
 
-- PHP 7.3 | 8
-- Laravel 8
-- Inertia-Laravel 0.3.3
+## Single component
 
-It's posible that this package works with older versions of PHP, Laravel or Inertia, but I don't have time to test it. If you try, please let me know 🙌.
+```php
+/**
+ * /resources/js/Pages/folder/component.vue
+ * http://your-domain.com/folder/component
+ */
+InertiaRoute::get('folder/component');
 
-## What about parameters
+/**
+ * Change route:
+ * /resources/js/Pages/folder/component.vue
+ * http://your-domain.com/about
+ */
+InertiaRoute::get('about', 'folder/component');
+InertiaRoute::get('/', 'folder/component');
+```
+
+Also you can use other verbs:
+
+```php
+InertiaRoute::get('folder/component');
+InertiaRoute::post('folder/component');
+InertiaRoute::put('folder/component');
+InertiaRoute::delete('folder/component');
+InertiaRoute::patch('folder/component');
+```
+
+## Bind folder
+
+Bind all components inside a folder:
+
+```php
+InertiaRoute::bind('some/folder/');
+```
+
+If you have components like:
+
+```
+resources/js/Pages/components/folder/index.vue
+resources/js/Pages/components/folder/about.vue
+resources/js/Pages/components/folder/anotherPage.vue
+```
+
+Now you can access them using:
+
+```
+http://yourdomain.com/some/folder/
+http://yourdomain.com/some/folder/about
+http://yourdomain.com/some/folder/anotherPage
+```
+
+You can change routes for folders using:
+
+```php
+InertiaRoute::bind('you/route', 'some/folder/');
+```
+
+**IMPORTANT!** InertiaRoute::bind use a "catch all" strategy, so put this route at the end of your route file or group.
+
+### Parameters
 
 If you want to use route paramaters(without any backend proccess) you could define a route like this:
 
 ```php
-InertiaRoute::get('/your/custom/route/{parameter}', 'path/to/your/component');
+InertiaRoute::get('/route/{name}', 'folder/component');
 ```
 
-And in your component you will receive that variable as a prop:
+And your component will receive parameters as props:
 
 vue:
 
@@ -65,7 +111,7 @@ vue:
 <script>
 export default{
     props: {
-        parameter: { required:true }
+        name: { required:true }
     }
 }
 </script>
@@ -74,77 +120,44 @@ export default{
 svelte:
 
 ```js
-<script>export let parameter</script>
+<script>export let name</script>
 ```
 
 Reat:
 
 ```
-Someone could help me with a react example? 🙊
+// I don't know react :(
 ```
 
-## Middlewares... Prefixes... Can
+Also you can use:
+
+```php
+InertiaRoute::get('folder/component/{name}');
+```
+
+## Middlewares... Prefixes... Can...
 
 InertiaRoute returns a Route object instance, so you can chained other methods:
 
 ```php
-InertiaRoute::get('/your/custom/route/{parameter}', 'path/to/your/component')
+InertiaRoute::get('/route/{parameter}', 'folder/component')
     ->middleware('validateParameter')
     ->can('viewThis');
 ```
 
-## I'm really lazy
-
-```php
-InertiaRoute::get('path/to/component/{parameter}');
-InertiaRoute::bind('components/folder/');
-```
-
-This automatically bind the route your provide with the folder or component name. In this case:
-
-```
-http://localhost:8000/path/to/component/{parameter}
-```
-
-will be load:
-
-```
-/resources/js/Pages/path/to/component/{parameter}.vue (react or svelte)
-```
-
-... And for InertiaRoute::bind:
-
-```
-http://localhost:8000/components/folder/hola
-```
-
-will be load:
-
-```
-/resources/js/Pages/components/folder/hola.vue (react or svelte)
-```
-
-nice, right? 😎
-
-## what if there is no component?
+## 404
 
 InertiaRoute verifies if the file exist before try to render it. In case you want to access a non existing component, it will display a 404 page.
 
-## I prefer Svelte or React
+## Svelte or React
 
-Yeah, me too (svelte simp here 🙊). By default InertiaRoute will render Vue files, so in most cases you don't need to do anything. But, if you are working with React or Svelte, you could easily switch to those frameworks.
+By default InertiaRoute will render Vue files. But, if you are working with React or Svelte, you could easily switch to those frameworks.
 
 In case of **React**:
 
 ```php
 InertiaRoute::react();
 InertiaRoute::get('path/to/component/{parameter}');
-```
-
-will be load:
-
-```
-/resources/js/Pages/path/to/component/{parameter}.js
 ```
 
 And for **Svelte**:
@@ -154,27 +167,11 @@ InertiaRoute::svelte();
 InertiaRoute::get('path/to/component/{parameter}');
 ```
 
-will be load:
+Remember to change framework before declare routes.
 
-```
-/resources/js/Pages/path/to/component/{parameter}.svelte
-```
+## Change root path
 
-## Other Verbs?
-
-I don't know why you want to do that 🤷... but you can!... just define your routes like:
-
-```php
-InertiaRoute::get('/your/custom/route/{parameter}');
-InertiaRoute::post('/your/custom/route/{parameter}');
-InertiaRoute::put('/your/custom/route/{parameter}');
-InertiaRoute::patch('/your/custom/route/{parameter}');
-InertiaRoute::delete('/your/custom/route/{parameter}');
-```
-
-## I don't use /resources/js/Pages
-
-Inertiajs suggests this folder in its installation guide, however, you may be use another folder. If that is the case, you can change your root folder with:
+Inertiajs suggests resources/js/Pages as default folder, however, you may be use another path. If that is the case, you can change your root folder with:
 
 ```php
 InertiaRoute::root('your/new/path');

@@ -1,6 +1,6 @@
 {
-    "name": "jecovier/inertia-route",
-    "description": "use inertia components as pages",
+    "name": "jecovier/laravel-inertia-route",
+    "description": "Automatically create routes for any inertia component.",
     "type": "library",
     "require": {
         "php": "^7.3|^8.0",
@@ -29,13 +29,13 @@
     "autoload": {
       "psr-4": {
         "App\\": "app/",
-        "Jecovier\\InertiaRoute\\": "src"
+        "Jecovier\\LaravelInertiaRoute\\": "src"
       }
     },
     "extra": {
         "laravel": {
             "aliases": {
-                "InertiaRoute": "Jecovier\\InertiaRoute\\InertiaRoute"
+                "InertiaRoute": "Jecovier\\LaravelInertiaRoute\\InertiaRoute"
             }
         }
     }

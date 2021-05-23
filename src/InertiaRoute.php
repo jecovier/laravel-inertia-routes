@@ -1,6 +1,6 @@
 <?php
 
-namespace Jecovier\InertiaRoute;
+namespace Jecovier\LaravelInertiaRoute;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
