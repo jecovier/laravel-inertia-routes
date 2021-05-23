@@ -35,7 +35,7 @@ composer require jecovier/laravel-inertia-route
 
 ## Usage
 
-## Single component
+### Single component
 
 ```php
 /**
@@ -63,7 +63,7 @@ InertiaRoute::delete('folder/component');
 InertiaRoute::patch('folder/component');
 ```
 
-## Bind folder
+### Bind folder
 
 Bind all components inside a folder:
 
